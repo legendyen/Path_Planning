@@ -135,3 +135,80 @@ Once BFS finishes, we backtrack from `F` using the **parent mapping**:
 3. `A` has no parent (start node)
 
 Final shortest path: A --> C --> F
+
+---
+
+## 🗺 BFS on a 2D Grid Map (Obstacle Navigation)
+
+We extend BFS to a **2D grid**, where:
+
+- `0` = **Free space** (walkable)  
+- `1` = **Obstacle** (blocked)  
+
+### Example Grid Map in NumPy Array
+```Python
+0 0 0 0 0
+1 0 0 0 0
+0 0 1 0 1
+0 1 1 0 1
+0 0 0 0 0
+```
+
+### Plot to 2D Map
+<img width="423" height="428" alt="image" src="https://github.com/user-attachments/assets/68ae59e4-9586-46ed-b012-e34920ad19db" />
+
+### Animation to Showcase Search Process
+<img width="1286" height="1088" alt="image" src="https://github.com/user-attachments/assets/92d0907a-0d00-40e4-8616-d0b7a6ec732c" />
+
+
+# 📊 BFS Execution Output & Explanation (Grid Map)
+
+## Step 1 — Start at (0, 0)
+- **Visiting:** `(0, 0)`
+- **Neighbors:** `[(0, 1)]`
+- **Parent Mapping:** `{(0, 1): (0, 0)}`
+- **Visited:** `{(0, 1), (0, 0)}`
+
+✅ Only `(0, 1)` is walkable from `(0, 0)`.  
+Add `(0, 1)` to the queue.
+
+---
+
+## Step 2 — Visit (0, 1)
+- **Visiting:** `(0, 1)`
+- **Neighbors:** `[(0, 2)]`
+- **Parent Mapping:** `{(0, 1): (0, 0), (0, 2): (0, 1)}`
+- **Visited:** `{(0, 1), (0, 2), (0, 0)}`
+
+✅ Adds `(0, 2)` to the queue.
+
+---
+
+## Step 3 — Continue BFS
+- BFS keeps expanding reachable free cells.
+- Obstacles (`1`s) are skipped.
+- Parent mapping grows as we record the previous cell for each new visited cell.
+
+---
+
+## Step 4 — Reach Goal
+Eventually BFS reaches `(4, 4)`:
+- **Visiting:** `(4, 3)`
+- **Neighbors:** `[(4, 4)]`
+- **Parent Mapping:** `{..., (4, 4): (4, 3)}`
+- **Visited:** `{..., (4, 4)}`
+
+🎯 **Goal found — stop search.**
+
+---
+
+## 🔄 Path Reconstruction
+We backtrack from `(4, 4)`:
+
+---
+
+## 🛤️ Final Path
+```text
+[(0, 0), (0, 1), (0, 2), (0, 3),
+ (0, 4), (1, 4), (2, 3), (3, 3),
+ (4, 3), (4, 4)]
